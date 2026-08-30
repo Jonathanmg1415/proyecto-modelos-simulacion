@@ -60,6 +60,5 @@ jupyter lab                      # abrir fase-1/notebook.ipynb
 
 ## Equipo
 
-- _(completar: Nombre 1)_
-- _(completar: Nombre 2)_
-- _(completar: Nombre 3)_
+- Jonathan Mazo
+- Juan Carlos Gomez
