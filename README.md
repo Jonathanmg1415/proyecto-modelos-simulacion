@@ -18,7 +18,7 @@ historial de accidentes y estado del título).
 
 | Fase | Contenido | Entrega |
 |---|---|---|
-| **1** | Modelo predictivo (notebook + `modelo.joblib`) | 15/sep/2026 |
+| **1** | Modelo predictivo (notebook + `modelo.joblib`) | 30/sep/2026 |
 | 2 | `train.py`, `predict.py`, Dockerfile, pruebas `pytest` | 31/oct/2026 |
 | 3 | API REST (`/health`, `/predict`, `/train`) + cliente de prueba | 22/nov/2026 |
 | 4 | Monitoreo: registro de predicciones, métricas, versionado, reentrenamiento | — |
