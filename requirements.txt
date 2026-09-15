@@ -1,0 +1,10 @@
+# Modelos y Simulación de Sistemas I — Proyecto Integrador
+# Entorno para la Fase 1 (notebook). Python 3.11–3.13.
+pandas==2.2.3
+numpy==2.2.4
+scikit-learn==1.7.2
+matplotlib==3.10.1
+seaborn==0.13.2
+joblib==1.5.2
+jupyterlab==4.6.3
+nbconvert==7.17.1
