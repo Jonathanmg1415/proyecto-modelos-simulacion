@@ -45,19 +45,38 @@ R² ≈ 0.835. El R² global (~0.14) es bajo por el efecto de los outliers de
 gama alta (vehículos de colección hasta ~$3M), no por un mal ajuste general.
 
 ## Instrucciones para ejecutar el notebook
-Desde la raíz del repositorio:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-jupyter lab                      # abrir fase-1/notebook.ipynb y "Restart & Run All"
-```
-
-O de forma no interactiva (reproduce el notebook y regenera `modelo.joblib`):
+Desde la raíz del repositorio, entra a la carpeta de la Fase 1:
 
 ```bash
 cd fase-1
+```
+
+Crea y activa un entorno virtual:
+
+**Linux (Fedora u otras distribuciones):**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+Instala las dependencias y abre el notebook:
+
+```bash
+pip install -r requirements.txt
+jupyter lab
+```
+
+Dentro de Jupyter, abre `notebook.ipynb` y ejecuta **Kernel → Restart & Run All**.
+
+Alternativa no interactiva (reproduce el notebook completo de principio a fin y regenera `modelo.joblib`, sin abrir la interfaz gráfica):
+
+```bash
 jupyter nbconvert --to notebook --execute --inplace notebook.ipynb
 ```
 
