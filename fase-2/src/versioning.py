@@ -60,7 +60,7 @@ class VersionManager:
 
     def load(self, version: str):
         # Para predict.py (se deja lista para no duplicar esta lógica luego).
-        
+
         version_dir = self.output_dir / version
         model_path = version_dir / self.MODEL_FILENAME
         if not model_path.exists():
@@ -70,3 +70,26 @@ class VersionManager:
         metrics = json.loads((version_dir / self.METRICS_FILENAME).read_text())
         metadata = json.loads((version_dir / self.METADATA_FILENAME).read_text())
         return model, metrics, metadata
+
+
+def load_model_for_predict(model_path: str):
+    """Para predict.py: --model puede apuntar directo al .joblib o a la carpeta
+    de una versión (p. ej. 'models/v1' o 'models/v1/modelo.joblib').
+
+    No reentrena ni reajusta nada: solo deserializa el pipeline ya entrenado.
+    """
+    path = Path(model_path)
+    if path.is_dir():
+        path = path / VersionManager.MODEL_FILENAME
+
+    if not path.exists():
+        print(f"ERROR: no se encontró el modelo en '{path}'. "
+                f"Verifica la ruta pasada en --model (debe apuntar a un "
+                f"'{VersionManager.MODEL_FILENAME}' o a su carpeta de versión).", file=sys.stderr)
+        sys.exit(2)
+
+    try:
+        return joblib.load(path)
+    except Exception as exc:
+        print(f"ERROR: no se pudo cargar el modelo en '{path}' ({exc}).", file=sys.stderr)
+        sys.exit(2)

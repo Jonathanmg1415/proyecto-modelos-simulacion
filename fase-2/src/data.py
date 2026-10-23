@@ -27,20 +27,49 @@ INPUT_SCHEMA = {
 }
 
 
-def load_and_validate(data_path: str, target: str) -> pd.DataFrame:
-      path = Path(data_path)
+def _read_csv_or_exit(path: Path, arg_name: str) -> pd.DataFrame:
       if not path.exists():
-            print(f"ERROR: no se encontró el archivo de datos en '{path}'. "
-                  f"Verifica la ruta pasada en --data.", file=sys.stderr)
+            print(f"ERROR: no se encontró el archivo '{path}'. "
+                  f"Verifica la ruta pasada en --{arg_name}.", file=sys.stderr)
+            sys.exit(2)
+      try:
+            return pd.read_csv(path)
+      except Exception as exc:
+            print(f"ERROR: no se pudo leer '{path}' como CSV ({exc}).", file=sys.stderr)
             sys.exit(2)
 
-      df = pd.read_csv(path)
+
+def load_and_validate(data_path: str, target: str) -> pd.DataFrame:
+      """Para train.py: exige también la columna objetivo."""
+      path = Path(data_path)
+      df = _read_csv_or_exit(path, "data")
 
       missing = [c for c in RAW_REQUIRED_COLUMNS if c not in df.columns]
       if target not in df.columns:
             missing.append(target)
       if missing:
             print(f"ERROR: faltan columnas requeridas en el CSV: {missing}", file=sys.stderr)
+            sys.exit(2)
+
+      return df
+
+
+def load_for_predict(input_path: str) -> pd.DataFrame:
+      """Para predict.py: NO exige la variable objetivo (no es necesaria para predecir).
+
+      Columnas adicionales en el CSV se ignoran (el modelo solo usa las columnas con
+      las que se entrenó). Categorías no vistas en entrenamiento se tratan como
+      "desconocidas" por el OneHotEncoder del pipeline (handle_unknown="ignore" /
+      "infrequent_if_exist"), sin generar error. Una celda nula en una columna
+      presente es válida (se imputa como en entrenamiento); lo que sí es un error
+      es que falte la columna completa.
+      """
+      path = Path(input_path)
+      df = _read_csv_or_exit(path, "input")
+
+      missing = [c for c in RAW_REQUIRED_COLUMNS if c not in df.columns]
+      if missing:
+            print(f"ERROR: faltan columnas requeridas en el CSV de entrada: {missing}", file=sys.stderr)
             sys.exit(2)
 
       return df
