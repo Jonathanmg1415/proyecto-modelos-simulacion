@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import platform
 
 from sklearn.model_selection import train_test_split
 
@@ -71,6 +72,7 @@ def run_training(data: str, target: str, output_dir: str, version: str,
             "test_rows": int(len(X_test)),
         },
         "evaluation_metric": "MAE, RMSE, R2 (y variantes <200k USD)",
+        "python_version": platform.python_version(),
         "requirements_file": "fase-2/requirements.txt",
         "git_commit": get_git_commit(),
         "reproducibility_notes": (
