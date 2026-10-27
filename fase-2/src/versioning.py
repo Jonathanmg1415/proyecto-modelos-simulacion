@@ -5,6 +5,7 @@ cargarla desde predict.py. No sobrescribe silenciosamente una versión existente
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -14,6 +15,9 @@ import joblib
 
 
 def get_git_commit() -> str:
+    env_commit = os.environ.get("GIT_COMMIT")
+    if env_commit:
+        return env_commit
     try:
         out = subprocess.check_output(["git", "rev-parse", "HEAD"], stderr=subprocess.DEVNULL)
         return out.decode().strip()

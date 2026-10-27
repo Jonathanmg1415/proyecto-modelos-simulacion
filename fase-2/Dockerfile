@@ -13,6 +13,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ src/
 COPY train.py predict.py ./
 
+# Referencia al commit de git con el que se construyó la imagen. .git/ se
+# excluye de la imagen (ver .dockerignore), así que no se puede leer con
+# "git rev-parse HEAD" dentro del contenedor: se recibe como build-arg.
+ARG GIT_COMMIT=unknown
+ENV GIT_COMMIT=${GIT_COMMIT}
+
 # Sin ENTRYPOINT: permite ejecutar "docker run <imagen> python train.py ..."
 # o "python predict.py ..." directamente. No se entrena nada durante el build.
 CMD ["python", "--version"]
