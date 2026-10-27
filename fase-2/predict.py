@@ -53,7 +53,7 @@ def run_prediction(model_path: str, input_path: str, output_path: str) -> dict:
         # si el número de predicciones no corresponde al de filas de entrada.
         print("ERROR: el número de predicciones no coincide con el número de filas "
               "de entrada.", file=sys.stderr)
-        sys.exit(1)
+        sys.exit(2)
 
     salida = df.copy()
     salida["prediccion"] = predicciones
@@ -79,3 +79,4 @@ def main(argv=None) -> None:
 
 if __name__ == "__main__":
     main()
+    

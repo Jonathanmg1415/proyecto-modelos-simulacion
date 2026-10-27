@@ -58,19 +58,6 @@ class VersionManager:
             "metadata_path": str(metadata_path.resolve()),
         }
 
-    def load(self, version: str):
-        # Para predict.py (se deja lista para no duplicar esta lógica luego).
-
-        version_dir = self.output_dir / version
-        model_path = version_dir / self.MODEL_FILENAME
-        if not model_path.exists():
-            print(f"ERROR: no existe la versión '{version}' en '{self.output_dir}'.", file=sys.stderr)
-            sys.exit(2)
-        model = joblib.load(model_path)
-        metrics = json.loads((version_dir / self.METRICS_FILENAME).read_text())
-        metadata = json.loads((version_dir / self.METADATA_FILENAME).read_text())
-        return model, metrics, metadata
-
 
 def load_model_for_predict(model_path: str):
     """Para predict.py: --model puede apuntar directo al .joblib o a la carpeta
