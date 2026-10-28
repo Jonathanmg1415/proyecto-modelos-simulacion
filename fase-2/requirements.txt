@@ -1,0 +1,6 @@
+# Fase 2 — Scripts y Docker. Python 3.11-3.13 (probado con 3.13.2).
+pandas==2.2.3
+numpy==2.2.4
+scikit-learn==1.7.2
+joblib==1.5.2
+pytest==9.1.1
