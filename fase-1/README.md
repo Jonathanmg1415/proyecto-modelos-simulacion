@@ -37,12 +37,7 @@ colección de precio millonario distorsionan cualquier métrica basada en el
 error al cuadrado.
 
 ## Principales resultados obtenidos
-Sobre el 20 % de prueba: Gradient Boosting reduce el MAE en **~50.7 %** frente
-al baseline (de ~$32.866 a ~$16.196) — el mejor MAE de los modelos comparados
-en esta rama, ligeramente por delante de Random Forest (~$16.639, sección
-8.2). En el mercado masivo (`price < 200k`) el MAE es de ~$6.960 con
-R² ≈ 0.835. El R² global (~0.14) es bajo por el efecto de los outliers de
-gama alta (vehículos de colección hasta ~$3M), no por un mal ajuste general.
+Gradient Boosting se eligió frente a Random Forest por validación cruzada sobre el 80 % de entrenamiento (MAE CV ≈ $9.442 vs. $9.901, sección 8.3) — el conjunto de prueba no participó en esa decisión. Evaluado después sobre el 20 % de prueba (usado únicamente para confirmar el modelo ya elegido), Gradient Boosting reduce el MAE en **~50.7 %** frente al baseline (de~$32.866 a ~$16.196). En el mercado masivo (`price < 200k`) el MAE es de ~$6.960 con R² ≈ 0.835. El R² global (~0.14) es bajo por el efecto de los outliers de gama alta (vehículos de colección hasta ~$3M), no por un mal ajuste general.
 
 ## Instrucciones para ejecutar el notebook
 Desde la raíz del repositorio, entra a la carpeta de la Fase 1:
@@ -80,6 +75,4 @@ Alternativa no interactiva (reproduce el notebook completo de principio a fin y 
 jupyter nbconvert --to notebook --execute --inplace notebook.ipynb
 ```
 
-Requiere Python 3.11–3.13. El notebook fija `RANDOM_STATE = 42` y corre de
-principio a fin sin intervención manual (el montaje de Google Drive se omite
-automáticamente fuera de Colab).
+Requiere Python 3.11–3.13. El notebook fija `RANDOM_STATE = 42` y corre de principio a fin sin intervención manual.
