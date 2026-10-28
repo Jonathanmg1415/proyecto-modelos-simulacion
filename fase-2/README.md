@@ -163,7 +163,17 @@ commit no se puede leer con `git rev-parse HEAD` dentro del contenedor: se
 pasa como *build-arg* y queda disponible para `train.py`/`predict.py` vía la
 variable de entorno `GIT_COMMIT`.
 
-**Bash / Linux / macOS:**
+> **Probado end-to-end el 27/oct/2026** (build + `train.py` + `predict.py` +
+> persistencia + error con entrada inválida, los 5 pasos de la sección 16.1 de
+> la especificación) en **PowerShell sobre Windows + Docker Desktop**. En esa
+> combinación específica, **los comandos en Git Bash de este mismo README no
+> funcionan**: el montaje `-v "$PWD/...` no falla con error, pero el volumen
+> queda vacío dentro del contenedor (problema de traducción de rutas de
+> MSYS/Git Bash hacia Docker, no de la aplicación). Si usan Windows, usen la
+> versión PowerShell. La versión Bash debería funcionar en Linux, macOS o WSL,
+> pero no se verificó ahí.
+
+**Bash / Linux / macOS (no verificado en Git Bash sobre Windows, ver nota arriba):**
 
 ```bash
 docker build -t modelos-fase2:1.0 --build-arg GIT_COMMIT=$(git rev-parse HEAD) .
@@ -221,9 +231,51 @@ contenedor, resultados verificados en `models/v-docker/` y
 `outputs/predicciones.csv` fuera del contenedor tras eliminarlo):
 
 ```
-_(pegar aquí la salida real de los tres comandos — build, train, predict —
-antes de la entrega)_
+PS> docker run --rm `
+      -v "${PWD}\..\fase-1\data:/app/data:ro" `
+      -v "${PWD}\models:/app/models" `
+      modelos-fase2:1.0 python train.py `
+      --data data/used_cars.csv --target price `
+      --output-dir models --version v-docker --seed 42
+Entrenamiento completado.
+  Versión guardada en : /app/models/v-docker
+  Modelo              : /app/models/v-docker/modelo.joblib
+  Métricas            : /app/models/v-docker/metrics.json
+  Metadatos           : /app/models/v-docker/metadata.json
+  MAE baseline        : 32865.97 USD
+  MAE modelo          : 16195.69 USD
+
+# Tras terminar el contenedor (--rm), el host sí tiene los archivos:
+PS> Get-ChildItem models\v-docker
+    metadata.json   metrics.json   modelo.joblib
+
+# metadata.json registra el commit real, no "unknown" (ver nota de build-arg arriba):
+PS> Select-String -Path models\v-docker\metadata.json -Pattern git_commit
+  "git_commit": "a3f75a64113fc0624a7df08c90100570249c3b3b",
+
+PS> docker run --rm `
+      -v "${PWD}\data:/app/data:ro" `
+      -v "${PWD}\models:/app/models:ro" `
+      -v "${PWD}\outputs:/app/outputs" `
+      modelos-fase2:1.0 python predict.py `
+      --model models/v-docker/modelo.joblib `
+      --input data/ejemplo_prediccion.csv `
+      --output outputs/predicciones.csv
+Predicción completada.
+  Filas predichas : 10
+  Archivo de salida: /app/outputs/predicciones.csv
+
+# Entrada inválida dentro del contenedor (CSV de prueba sin la columna "engine"):
+PS> docker run --rm ... modelos-fase2:1.0 python predict.py --model models/v-docker/modelo.joblib --input data/_invalido.csv --output outputs/no_deberia_existir.csv
+ERROR: faltan columnas requeridas en el CSV de entrada: ['engine']
+PS> echo $LASTEXITCODE
+2
+PS> Test-Path outputs\no_deberia_existir.csv
+False
 ```
+
+(Verificado el 27/oct/2026; `models/v-docker` se eliminó después de esta
+prueba para no duplicar las versiones `v1`/`v2` que sí se entregan.)
 
 ## 8. Resultados y limitaciones conocidas
 
