@@ -1,0 +1,30 @@
+# Entornos virtuales y cachés
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Control de versiones y credenciales
+.git/
+.gitignore
+.env
+*.key
+*.pem
+
+# Datos, modelos y resultados: se montan en tiempo de ejecución, no se
+# incluyen en la imagen.
+data/
+models/
+outputs/
+
+# Pruebas y documentación: no son necesarias para ejecutar train.py/predict.py
+tests/
+README.md
+
+# Editores / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

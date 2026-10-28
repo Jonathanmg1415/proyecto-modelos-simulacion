@@ -1,0 +1,11 @@
+brand,model,model_year,milage,fuel_type,engine,transmission,ext_col,int_col,accident,clean_title
+Jeep,Grand Cherokee Laredo,2013,"106,700 mi.",E85 Flex Fuel,290.0HP 3.6L V6 Cylinder Engine Flex Fuel Capability,6-Speed A/T,Black,Black,None reported,Yes
+INFINITI,FX37 Base,2013,"51,500 mi.",Gasoline,325.0HP 3.7L V6 Cylinder Engine Gasoline Fuel,A/T,Gray,Black,None reported,Yes
+Ford,E350 Super Duty XLT,2012,"163,000 mi.",E85 Flex Fuel,255.0HP 5.4L 8 Cylinder Engine Flex Fuel Capability,A/T,White,Gray,None reported,Yes
+Cadillac,CTS 2.0L Turbo Luxury,2014,"110,000 mi.",Gasoline,272.0HP 2.0L 4 Cylinder Engine Gasoline Fuel,A/T,Gold,Beige,None reported,Yes
+Jaguar,F-TYPE V6 S,2014,"62,194 mi.",Gasoline,3.0 Liter SC ULEV,Automatic,Black,Black,None reported,
+Toyota,FJ Cruiser Base,2014,"86,000 mi.",Gasoline,260.0HP 4.0L V6 Cylinder Engine Gasoline Fuel,5-Speed A/T,Blue,Black,None reported,Yes
+Jaguar,XE 25t,2019,"41,452 mi.",Gasoline,247.0HP 2.0L 4 Cylinder Engine Gasoline Fuel,Transmission w/Dual Shift Mode,White,Black,At least 1 accident or damage reported,Yes
+Tesla,Model 3 Long Range,2018,"36,187 mi.",,271.0HP Electric Motor Electric Fuel System,1-Speed A/T,White,Black,None reported,Yes
+Mercedes-Benz,E-Class E 300,2019,"32,580 mi.",Gasoline,2.0 Liter Turbo,Automatic,Obsidian Black Metallic,Beige,None reported,
+Porsche,Panamera S,2012,"49,000 mi.",Gasoline,400.0HP 4.8L 8 Cylinder Engine Gasoline Fuel,7-Speed A/T,White,Black,,

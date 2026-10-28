@@ -18,3 +18,10 @@ Thumbs.db
 # Editores / IDEs
 .vscode/
 .idea/
+
+# Material privado (retroalimentación del profesor, no se versiona)
+Calificacion_Fase1_Equipo_Jonathan_Vehiculos.docx
+*.docx
+
+# Fase 2: resultados generados en cada ejecución, no se versionan
+fase-2/outputs/
