@@ -158,13 +158,16 @@ modificar `models/` de la entrega.
 
 ## 7. Docker
 
-```bash
-docker build -t modelos-fase2:1.0 .
-```
+El `Dockerfile` excluye `.git/` de la imagen (ver `.dockerignore`), así que el
+commit no se puede leer con `git rev-parse HEAD` dentro del contenedor: se
+pasa como *build-arg* y queda disponible para `train.py`/`predict.py` vía la
+variable de entorno `GIT_COMMIT`.
 
 **Bash / Linux / macOS:**
 
 ```bash
+docker build -t modelos-fase2:1.0 --build-arg GIT_COMMIT=$(git rev-parse HEAD) .
+
 mkdir -p models outputs
 docker run --rm \
   -v "$PWD/../fase-1/data:/app/data:ro" \
@@ -186,6 +189,8 @@ docker run --rm \
 **PowerShell (Windows):**
 
 ```powershell
+docker build -t modelos-fase2:1.0 --build-arg GIT_COMMIT=$(git rev-parse HEAD) .
+
 New-Item -ItemType Directory -Force models, outputs | Out-Null
 
 docker run --rm `
@@ -211,8 +216,14 @@ por lo que persisten aunque el contenedor se elimine (`--rm`). El
 entrenamiento **no** ocurre durante `docker build`, solo al ejecutar
 `docker run ... python train.py ...`.
 
-> _Evidencia de ejecución: completar con la salida real de los comandos
-> anteriores antes de la entrega (captura o texto copiado)._
+**Evidencia de ejecución** (build + `train.py` + `predict.py` dentro del
+contenedor, resultados verificados en `models/v-docker/` y
+`outputs/predicciones.csv` fuera del contenedor tras eliminarlo):
+
+```
+_(pegar aquí la salida real de los tres comandos — build, train, predict —
+antes de la entrega)_
+```
 
 ## 8. Resultados y limitaciones conocidas
 

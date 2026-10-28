@@ -50,10 +50,10 @@ class VersionManager:
         joblib.dump(model, model_path, compress=3)
 
         metrics_path = version_dir / self.METRICS_FILENAME
-        metrics_path.write_text(json.dumps(metrics, indent=2, ensure_ascii=False))
+        metrics_path.write_text(json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8")
 
         metadata_path = version_dir / self.METADATA_FILENAME
-        metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False))
+        metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
 
         return {
             "version_dir": str(version_dir.resolve()),
