@@ -294,8 +294,8 @@ prueba para no duplicar las versiones `v1`/`v2` que sí se entregan.)
 
 ## 9. Identificación de la entrega
 
-Commit/etiqueta correspondiente a la Entrega 2: `_(completar al etiquetar
-`entrega-2`, antes de la fecha límite)_`.
+Commit/etiqueta correspondiente a la Entrega 2: `entrega-2` (ver etiquetas
+del repositorio en GitHub).
 
 ## 10. Fuentes
 
