@@ -1,0 +1,10 @@
+# Fase 3 — API REST. Mismas versiones de fase-2 (para cargar modelos sin advertencias de versión) + FastAPI y lo necesario para servirlo/probarlo.
+pandas==2.2.3
+numpy==2.2.4
+scikit-learn==1.7.2
+joblib==1.5.2
+pytest==9.1.1
+fastapi==0.162.5
+uvicorn==0.54.0
+httpx2==2.16.2
+pydantic==2.14.3
