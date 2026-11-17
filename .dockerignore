@@ -1,0 +1,26 @@
+# Contexto de build de la imagen de fase-3 (se construye desde la raíz).
+# El Dockerfile copia explícitamente solo lo necesario, pero excluir lo
+# pesado evita enviar a Docker los .venv, .git, datos y modelos.
+.git/
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+
+# Datos, modelos y resultados: se montan en tiempo de ejecución.
+fase-1/
+fase-2/data/
+fase-2/models/
+fase-2/outputs/
+data/
+models/
+outputs/
+
+# No necesarios para ejecutar la API.
+**/tests/
+**/README.md
+*.md
+.vscode/
+.idea/
+.DS_Store
