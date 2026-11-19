@@ -187,6 +187,7 @@ docker build -f fase-3/Dockerfile -t modelos-fase3:1.0 \
 docker run --rm -p 8000:8000 \
   -v "$PWD/fase-1/data:/app/fase-1/data:ro" \
   -v "$PWD/fase-2/models:/app/fase-2/models" \
+  -v "$PWD/fase-4/data:/app/fase-4/data" \
   modelos-fase3:1.0
 ```
 
@@ -199,6 +200,7 @@ docker build -f fase-3/Dockerfile -t modelos-fase3:1.0 `
 docker run --rm -p 8000:8000 `
   -v "${PWD}\fase-1\data:/app/fase-1/data:ro" `
   -v "${PWD}\fase-2\models:/app/fase-2/models" `
+  -v "${PWD}\fase-4\data:/app/fase-4/data" `
   modelos-fase3:1.0
 ```
 
@@ -207,6 +209,9 @@ docker run --rm -p 8000:8000 `
 - `fase-1/data` se monta solo lectura (CSV de entrenamiento) y `fase-2/models`
   lectura/escritura: las versiones creadas con `/train` **persisten en el equipo
   anfitrión** aunque el contenedor se elimine (`--rm`).
+- `fase-4/data` también se monta lectura/escritura: ahí la API escribe
+  `solicitudes.csv` (fase 4, registro de cada llamada a `/predict`) y también
+  persiste tras eliminar el contenedor. Ver [`fase-4/README.md`](../fase-4/README.md).
 - El contenedor corre con un usuario sin privilegios (`apiuser`, UID 1000), de
   modo que los archivos escritos en el volumen quedan con el dueño del usuario
   habitual del equipo y no con `root`.
@@ -262,6 +267,7 @@ python -m pytest -v
 | `test_predict_entrada_valida_devuelve_prediccion_y_version` | entrada válida → 200 con `prediccion` numérica y `version` |
 | `test_predict_campo_faltante_es_rechazado` | sin `milage` → 422 señalando el campo |
 | `test_predict_version_inexistente_responde_503` | (extra) versión activa inexistente → 503 |
+| `test_predict_registra_cada_llamada_para_monitoreo_fase4` | (extra, fase 4) cada llamada a `/predict` —válida o rechazada— deja una fila en el registro con `fecha_hora`, `estado_http`, `version` y `prediccion` |
 
 ```
 tests/test_api.py::test_health_responde_200 PASSED

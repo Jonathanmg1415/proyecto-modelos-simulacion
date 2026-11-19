@@ -8,6 +8,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FASE1_DIR = REPO_ROOT / "fase-1"
 FASE2_DIR = REPO_ROOT / "fase-2"
+FASE4_DIR = REPO_ROOT / "fase-4"
 
 if str(FASE2_DIR) not in sys.path:
       sys.path.insert(0, str(FASE2_DIR))
@@ -15,16 +16,21 @@ if str(FASE2_DIR) not in sys.path:
 class Settings:
       """Configuración de la API, leída de variables de entorno
       con valores por defecto para ejecución local"""
-      
+
       def __init__(self) -> None:
             import os
-            
+
             self.models_dir: str = os.environ.get("MODELS_DIR", str(FASE2_DIR / "models"))
             self.active_version: str = os.environ.get("MODEL_VERSION", "v1")
             self.train_data_path: str = os.environ.get("TRAIN_DATA_PATH", str(FASE1_DIR / "data" / "used_cars.csv"))
             self.train_target: str = os.environ.get("TRAIN_TARGET", "price")
             self.train_seed: int = int(os.environ.get("TRAIN_SEED", "42"))
             self.train_test_size: float = float(os.environ.get("TRAIN_TEST_SIZE", "0.20"))
+            # Fase 4: registro de solicitudes a /predict (una fila por llamada,
+            # incluidas las rechazadas). Se usa para el reporte de monitoreo.
+            self.request_log_path: str = os.environ.get(
+                  "REQUEST_LOG_PATH", str(FASE4_DIR / "data" / "solicitudes.csv")
+            )
 
 
 def get_settings() -> Settings:

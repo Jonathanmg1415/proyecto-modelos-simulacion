@@ -63,11 +63,19 @@ def trained_env(tmp_path_factory):
       run_training(data=str(csv_path), target="price", output_dir=str(models_dir),
                   version="vtest", seed=42, test_size=0.25)
 
-      previo = {k: os.environ.get(k) for k in ("MODELS_DIR", "MODEL_VERSION", "TRAIN_DATA_PATH")}
+      # Fase 4: el registro de /predict también se redirige a un archivo
+      # temporal, para no escribir filas de prueba sobre fase-4/data/solicitudes.csv
+      # (el registro real de la entrega).
+      log_path = data_dir / "solicitudes_test.csv"
+
+      previo = {k: os.environ.get(k) for k in
+                  ("MODELS_DIR", "MODEL_VERSION", "TRAIN_DATA_PATH", "REQUEST_LOG_PATH")}
       os.environ["MODELS_DIR"] = str(models_dir)
       os.environ["MODEL_VERSION"] = "vtest"
       os.environ["TRAIN_DATA_PATH"] = str(csv_path)
-      yield {"models_dir": str(models_dir), "version": "vtest", "csv": str(csv_path)}
+      os.environ["REQUEST_LOG_PATH"] = str(log_path)
+      yield {"models_dir": str(models_dir), "version": "vtest", "csv": str(csv_path),
+             "log_path": str(log_path)}
       for k, v in previo.items():
             if v is None:
                   os.environ.pop(k, None)
