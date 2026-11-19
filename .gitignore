@@ -19,9 +19,11 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Material privado (retroalimentación del profesor, no se versiona)
+# Material privado (retroalimentación del profesor y especificaciones del
+# curso descargadas localmente; no se versionan)
 Calificacion_Fase1_Equipo_Jonathan_Vehiculos.docx
 *.docx
+*.pdf
 
 # Fase 2: resultados generados en cada ejecución, no se versionan
 fase-2/outputs/
